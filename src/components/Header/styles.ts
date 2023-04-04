@@ -39,4 +39,21 @@ export const CartButton = styled.button`
   background: ${({ theme }) => theme.yellowLight};
   color: ${({ theme }) => theme.yellowDark};
   border-radius: 6px;
+
+  position: relative;
+
+  span {
+    position: absolute;
+    top: -0.5rem;
+    right: -0.5rem;
+    background: ${({ theme }) => theme.yellowDark};
+    color: ${({ theme }) => theme.white};
+    border-radius: 999px;
+    width: 1.25rem;
+    height: 1.25rem;
+    font: 700 0.75rem 'Roboto', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `

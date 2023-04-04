@@ -12,12 +12,19 @@ import {
   Type,
 } from './styles'
 
-import product1 from '../../../../assets/products/product-1.svg'
 import { useState } from 'react'
 import { ShoppingCart } from 'phosphor-react'
+import { Product as ProductType } from '../../../../utils/products'
+import { useCart } from '../../../../hooks/useCart'
 
-export const Product = () => {
+type ProductProps = {
+  product: ProductType
+}
+
+export const Product = ({ product }: ProductProps) => {
   const [amount, setAmount] = useState(1)
+
+  const { addToCart } = useCart()
 
   const increaseAmount = () => {
     setAmount(amount + 1)
@@ -29,26 +36,31 @@ export const Product = () => {
     }
   }
 
+  const handleAddToCart = () => {
+    addToCart(product)
+  }
+
+  const priceFormatted = product.price.toFixed(2).replace('.', ',')
+
   return (
     <Container>
       <ImageContainer>
-        <img src={product1} alt="" />
+        <img src={product.image} alt="" />
       </ImageContainer>
 
       <Types>
-        <Type>Tradicional</Type>
-        <Type>Expresso</Type>
+        {product.tags.map((type) => (
+          <Type key={type}>{type}</Type>
+        ))}
       </Types>
 
-      <Title>Expresso Tradicional</Title>
+      <Title>{product.name}</Title>
 
-      <Description>
-        O tradicional café feito com água quente e grãos moídos
-      </Description>
+      <Description>{product.description}</Description>
 
       <InfoContainer>
         <InfoPrice>
-          <span>R$</span> 12,90
+          <span>R$</span> {priceFormatted}
         </InfoPrice>
         <InfoActions>
           <InfoQuantity>
@@ -56,7 +68,7 @@ export const Product = () => {
             <div>{amount}</div>
             <button onClick={increaseAmount}>+</button>
           </InfoQuantity>
-          <InfoAddToCart>
+          <InfoAddToCart onClick={handleAddToCart}>
             <ShoppingCart weight="fill" color="#FFF" size={20} />
           </InfoAddToCart>
         </InfoActions>
