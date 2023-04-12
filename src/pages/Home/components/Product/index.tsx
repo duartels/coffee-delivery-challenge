@@ -37,7 +37,8 @@ export const Product = ({ product }: ProductProps) => {
   }
 
   const handleAddToCart = () => {
-    addToCart(product)
+    addToCart(product, amount)
+    setAmount(1)
   }
 
   const priceFormatted = product.price.toFixed(2).replace('.', ',')

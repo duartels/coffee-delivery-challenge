@@ -6,9 +6,7 @@ import Logo from '../../assets/logo.svg'
 import { useCart } from '../../hooks/useCart'
 
 export const Header = () => {
-  const { cart } = useCart()
-
-  const cartSize = cart.length
+  const { totalItems } = useCart()
 
   return (
     <Container>
@@ -21,7 +19,7 @@ export const Header = () => {
         </LocationButton>
 
         <CartButton>
-          <span>{cartSize}</span>
+          <span>{totalItems}</span>
           <ShoppingCart size={22} weight="fill" />
         </CartButton>
       </NavContainer>

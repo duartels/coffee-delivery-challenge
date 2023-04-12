@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useMemo, useState } from 'react'
 import { Product } from '../utils/products'
 
 type CartProduct = {
@@ -7,8 +7,9 @@ type CartProduct = {
 
 type CartContextData = {
   cart: CartProduct[]
-  addToCart: (product: Product) => void
+  addToCart: (product: Product, amount: number) => void
   removeFromCart: (productId: number) => void
+  totalItems: number
 }
 
 export const CartContext = createContext({} as CartContextData)
@@ -20,19 +21,19 @@ type CartContextProviderProps = {
 export const CartContextProvider = ({ children }: CartContextProviderProps) => {
   const [cart, setCart] = useState<CartProduct[]>([])
 
-  const addToCart = (product: Product) => {
+  const addToCart = (product: Product, amount: number) => {
     const productAlreadyInCart = cart.find((item) => item.id === product.id)
 
     if (productAlreadyInCart) {
       setCart(
         cart.map((item) =>
           item.id === product.id
-            ? { ...product, amount: item.amount + 1 }
+            ? { ...product, amount: item.amount + amount }
             : item,
         ),
       )
     } else {
-      setCart([...cart, { ...product, amount: 1 }])
+      setCart([...cart, { ...product, amount }])
     }
   }
 
@@ -40,8 +41,17 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
     setCart(cart.filter((item) => item.id !== productId))
   }
 
+  const totalItems = useMemo(() => {
+    return cart.reduce((sumAmount, product) => {
+      sumAmount += product.amount
+      return sumAmount
+    }, 0)
+  }, [cart])
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, totalItems }}
+    >
       {children}
     </CartContext.Provider>
   )
