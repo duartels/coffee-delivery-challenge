@@ -18,7 +18,7 @@ export const Header = () => {
           <span>Porto Alegre</span>
         </LocationButton>
 
-        <CartButton>
+        <CartButton to="/checkout">
           <span>{totalItems}</span>
           <ShoppingCart size={22} weight="fill" />
         </CartButton>

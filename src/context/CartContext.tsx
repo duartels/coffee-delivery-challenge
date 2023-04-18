@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useMemo, useState } from 'react'
 import { Product } from '../utils/products'
 
-type CartProduct = {
+export type CartProduct = {
   amount: number
 } & Product
 

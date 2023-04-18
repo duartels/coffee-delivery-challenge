@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.header`
@@ -32,7 +33,7 @@ export const LocationButton = styled.button`
   color: ${({ theme }) => theme.purpleDark};
 `
 
-export const CartButton = styled.button`
+export const CartButton = styled(Link)`
   padding: 1rem;
   border: 0;
   cursor: pointer;
