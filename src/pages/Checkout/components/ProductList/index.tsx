@@ -1,7 +1,7 @@
 import { useCart } from '../../../../hooks/useCart'
 import { ProductItem } from '../ProductItem'
 import { ProductsTotal } from '../ProductsTotal'
-import { Container, ProductListContainer } from './styles'
+import { ConfirmOrderButton, Container, ProductListContainer } from './styles'
 
 export const ProductList = () => {
   const { cart } = useCart()
@@ -16,6 +16,8 @@ export const ProductList = () => {
         ))}
 
         <ProductsTotal />
+
+        <ConfirmOrderButton type="submit">CONFIRMAR PEDIDO</ConfirmOrderButton>
       </ProductListContainer>
     </Container>
   )

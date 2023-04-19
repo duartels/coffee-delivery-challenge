@@ -17,3 +17,13 @@ export const ProductListContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
 `
+
+export const ConfirmOrderButton = styled.button`
+  width: 100%;
+  padding: 0.75rem 0.5rem;
+  border: none;
+  border-radius: 6px;
+  background: ${({ theme }) => theme.yellow};
+  color: ${({ theme }) => theme.white};
+  font: 700 0.875rem 'Roboto', sans-serif;
+`
