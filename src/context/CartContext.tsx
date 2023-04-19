@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useMemo, useState } from 'react'
+import { createContext, ReactNode, useEffect, useMemo, useState } from 'react'
 import { Product } from '../utils/products'
 
 export type CartProduct = {
@@ -19,7 +19,15 @@ type CartContextProviderProps = {
 }
 
 export const CartContextProvider = ({ children }: CartContextProviderProps) => {
-  const [cart, setCart] = useState<CartProduct[]>([])
+  const [cart, setCart] = useState<CartProduct[]>(() => {
+    const storagedCart = localStorage.getItem('@CoffeeDelivery:cart')
+
+    if (storagedCart) {
+      return JSON.parse(storagedCart)
+    }
+
+    return []
+  })
 
   const addToCart = (product: Product, amount: number) => {
     const productAlreadyInCart = cart.find((item) => item.id === product.id)
@@ -46,6 +54,10 @@ export const CartContextProvider = ({ children }: CartContextProviderProps) => {
       sumAmount += product.amount
       return sumAmount
     }, 0)
+  }, [cart])
+
+  useEffect(() => {
+    localStorage.setItem('@CoffeeDelivery:cart', JSON.stringify(cart))
   }, [cart])
 
   return (
